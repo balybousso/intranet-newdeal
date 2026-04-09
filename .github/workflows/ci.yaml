@@ -58,3 +58,21 @@ jobs:
         run: |
           docker build -t boussom/intranet-newdeal:latest .
           docker push boussom/intranet-newdeal:latest
+
+  notification:
+    name: "Notification Email"
+    runs-on: ubuntu-latest
+    needs: [build, security-scan, push]
+    if: always()
+    steps:
+      - name: Envoi email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "CI Pipeline Dev - ${{ job.status }}"
+          to: moussawade@groupeisi.com
+          from: ${{ secrets.MAIL_USERNAME }}
+          body: "Le pipeline CI s'est termine avec le statut : ${{ job.status }}"
