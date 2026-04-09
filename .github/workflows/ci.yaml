@@ -32,7 +32,8 @@ jobs:
         with:
           image-ref: intranet-newdeal:scan
           format: table
-          exit-code: '0'
+          exit-code: '1'
+          severity: 'CRITICAL'
 
       - name: Scan secrets avec Gitleaks
         uses: gitleaks/gitleaks-action@v2
