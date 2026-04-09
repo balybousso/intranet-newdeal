@@ -55,4 +55,6 @@ jobs:
           subject: "CD Pipeline Prod - ${{ job.status }}"
           to: moussawade@groupeisi.com
           from: ${{ secrets.MAIL_USERNAME }}
+          secure: false
+          ignore_cert: true
           body: "Le pipeline CD s'est termine avec le statut : ${{ job.status }}"
